@@ -26,7 +26,7 @@ body{
   content: ' ';
 }
 .body2{
-  background-color:#7cc688;
+  background-color:#b6dbfa;
 
   position: relative;
 /*  height:100%;*/
@@ -94,6 +94,19 @@ div.col-lg-8 {
   border-left: 6px double white;
   background: 	#3397bd;  
   color: white;
+}
+
+.imagebox{
+    background-color: #e1f0fc;
+}
+
+.img2 img{
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+    padding: 10px; 
 }
 /*second.html*/
 /*.mini{*/
