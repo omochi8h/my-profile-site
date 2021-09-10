@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <mata charset=utf-8 />
+        <title>電池のしくみ</title>
+
+		<link href="css/jquery-ui.css" rel="stylesheet">
+		<script type="text/javascript" language="javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" language="javascript" src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" language="javascript" src="js/jQueryRotate.min.js"></script>
+        <script type="text/javascript" language="javascript" src="js/anime.min.js"></script>
+        <script type="text/javascript" language="javascript" src="js/anime.js"></script>
+        <script type="text/javascript" language="javascript" src="js/anime.es.js"></script>
+
+        <style type="text/css">
+            body{background-color: pink}
+
+            h1.title1{position:absolute; top:10px;}
+
+            div.soln {position:absolute; background-color: skyblue; margin: 50px; width: 700px; height: 480px; left: 20px; top:200px; z-index: 1;}
+
+            #change{position:absolute; left:560px; top:95px; display:none}
+
+            #Cuelec {position:absolute; background-color: salmon; margin: 100px; width: 200px; height: 300px; left: 400px; top:240px; z-index: 3;}
+
+            #Znelec{position:absolute;  margin: 100px; width: 200px; height: 300px; left: 30px; top:240px; z-index: 3; }
+            #Zn2{position:absolute;  margin: 100px; width: 200px; height: 300px; left: 30px; top:240px; z-index: 3; display: none;}
+            #dousen{ width: 770px;  height: 400px;  position: absolute;  top: 140px;  left:120px; z-index:2
+            }
+
+            #ClIon1{ width: 60px;  height: 60px;  position: absolute;  top: 350px;  left:350px; z-index:4;}
+            #ClIon2{ width: 60px;  height: 60px;  position: absolute;  top: 550px;  left:420px; z-index:4;}
+
+            #electron1{ width: 60px;  height: 60px;  position: absolute;  top: 400px;  left:150px; z-index:4; display: none; }
+
+            #electron2{ width: 60px;  height: 60px;  position: absolute;  top: 400px;  left:250px; z-index:4; display: none;}
+
+
+            #ZnIon  { width: 80px;  height: 80px;  position: absolute;  top: 460px;  left:330px; z-index:4; display: none;}
+
+            #HIon1  { width: 60px;  height: 60px;  position: absolute;  top: 400px;  left:400px; z-index:4; display="block";}
+            #HIon2  { width: 60px;  height: 60px;  position: absolute;  top: 600px;  left:350px; z-index:4; display="block";}
+            #Hmole  { width: 120px;  height: 70px;  position: absolute;  top: 340px;  left:540px; z-index:4; display:none;}
+
+        </style>
+
+        <script>
+//            document.write("<input type='text' id='mondai' size='80' width='200' height='50' font-size='5.0em' value="+textmemo(0)+"></input>");
+//            document.write(" <form name='form'> <textarea type='text' name='mondai' value='1' rows='8' cols='80'>"+textmemo(0)+"</textarea></form>");
+            var text1 = ["負極をクリックしてください。",
+                       "電子がありますね。クリックしてみましょう。",
+                       "負極から正極に電子が移動しました。\n次は正極での反応について考えてみましょう。\n正極で電子とくっつくのは何イオン？ドラッグしてみよう",
+                    "水素イオンと電子がくっついて水素原子になりました。\n次はボタンをクリックしてみてね。",
+                    "水素イオン２個から水素分子ができました！\n次はこの水素分子をクリックしてみよう。",
+                    "正極で発生した水素分子が空気中に出ていきました。\nこれが電池の一連の流れです。\nここまでお疲れ様！"
+                    ];
+            function textmemo(number){
+                return text1[number];
+            }
+            function init(){
+                document.form.mondai.value=textmemo(0);
+            }
+
+
+            var OKfanc = function(){
+                 alert("正解です。");
+                 document.getElementById("Znelec").style.display="none";
+                 document.getElementById("Zn2").style.display="block";
+                document.getElementById("electron1").style.display="block";
+                 document.getElementById("electron2").style.display="block";
+                 document.getElementById("ZnIon").style.display="block";
+//                document.getElementById("mondai").value=textmemo(1);
+                document.form.mondai.value=textmemo(1);
+             }
+            var NGfanc = function(){
+                 alert("不正解です。");
+             }
+
+            var num = 0;
+            var elecfunc1 = function(){
+                var electron1 = document.getElementById('electron1');
+                electron1.addEventListener('click',function(){
+                    anime({
+                        targets: electron1,
+                        duration:5000,
+                        delay:10,
+                        translateX:[
+                            0,50,50,420,420,390
+                        ],
+                        translateY: [
+                            0,-60,-220,-220,-110,-60
+                        ]
+                    })
+                num = num +1;
+                if(num>1){
+//            document.getElementById("mondai").value=textmemo(2);
+            document.form.mondai.value=textmemo(2);
+            }
+                })
+
+            }
+
+            var elecfunc2 = function(){
+                var electron2 = document.getElementById('electron2');
+                electron2.addEventListener('click',function(){
+                    anime({
+                        targets: electron2,
+                        duration:5000,
+                        delay:1,
+                        translateX:[
+                            0,-50,-50,320,320,350
+                        ],
+                        translateY: [
+                            0,-60,-220,-220,-100,-60
+                        ]
+                    })
+                num = num+1;
+                if(num>1){
+    //            document.getElementById("mondai").value=textmemo(2);
+                    document.form.mondai.value=textmemo(2);
+                }
+                })
+
+
+            }
+
+            var hydrocount =0;
+            $(function(){
+                $(".HIon").draggable({
+                });
+                $(".ClIon").draggable({
+                });
+                $(".elec").droppable({
+                    accept: ".HIon",
+
+                    drop:function(event,ui){
+                        var obj_id = ui.draggable.attr("id");
+                        var elec_id = $(this).attr("id");
+                        $(this).hide();
+                        alert("電子と水素イオンが重なりました"+obj_id
+                              +elec_id
+                             );
+                        document.getElementById(obj_id).src='images/ion/hydrogen.png';
+                        hydrocount = hydrocount+1;
+                        if(hydrocount>=2){
+                        document.form.mondai.value=textmemo(3);
+                            document.getElementById("change").style.display="block";
+                        }
+
+
+                        //                    var obj=document.activeElement;
+//                    alert(obj.id);
+//                        document.getElementById("electron1").style.display="none";
+//                        document.getElementById("electron2").style.display="none";
+
+//                        document.getElementById(elec_id).style.display="none";
+//                        document.getElementById("id").style.display="none";
+//                        document.getElementById("#HIon2").style.display="none";
+
+                    }
+                });
+            });
+
+            var changemolecule = function(){
+                document.getElementById("HIon1").style.display="none";
+                document.getElementById("HIon2").style.display="none";
+                document.getElementById("Hmole").style.display="block";
+                document.form.mondai.value=textmemo(4);
+            }
+
+            var clickmolecule = function(){
+                document.form.mondai.value=textmemo(5);
+                var Hmole = document.getElementById('Hmole');
+                Hmole.addEventListener('click',function(){
+                    anime({
+                        targets: Hmole,
+                        duration:5000,
+                        delay:10,
+                        translateX:[
+                            0,60
+                        ],
+                        translateY: [
+                            0,-220
+                        ]
+                    })
+
+                })
+
+
+            }
+
+        </script>
+<!--        </div>-->
+
+    </head>
+    <body onload="init();">
+
+        <h1 id="title1" >電池のしくみを学ぼう！</h1>
+    <form name='form'>
+        <textarea type='text' id='mondai' name='mondai' value='1' rows='6' cols='64'></textarea>
+    </form>
+        <button type="button" id="change" onclick="changemolecule()">水素分子にチェンジ</button>
+
+<!--        <div id="try" class="try">-->
+
+        <div id="soln" class="soln"></div>
+
+        <image id="Cuelec"	class="Cuelec" src="images/ion/Cuelec.png"
+               onclick="NGfanc()"/>
+        <image id="Znelec"	class="Znelec" src="images/ion/Znelec.png"
+               onclick="OKfanc()"/>
+        <image id="Zn2"	class="Zn2" src="images/ion/Znelec_2.png"/>
+
+        <image id="electron1"	class="elec" src="images/ion/electron.png"
+               onclick="elecfunc1()"/>
+        <image id="electron2"	class="elec" src="images/ion/electron.png"
+               onclick="elecfunc2()"/>
+        <image id="ZnIon"	src="images/ion/znIon.png"
+               onclick=""/>
+        <image id="HIon1"	class="HIon" src="images/ion/hydroIon.png"
+               onclick=""/>
+        <image id="HIon2"	class="HIon" src="images/ion/hydroIon.png"
+               onclick=""/>
+        <image id="Hmole"	class="Hmole" src="images/ion/hydro_molecule.png"
+               onclick="clickmolecule()" />
+        <image id="dousen"	class="dousen" src="images/ion/dousen.png">
+        <image id="ClIon1"	class="ClIon" src="images/ion/cl.png"
+               onclick=""/>
+        <image id="ClIon2"	class="ClIon" src="images/ion/cl.png"
+               onclick=""/>
+
+<!--        </div>-->
+
+    </body>
+</html>
